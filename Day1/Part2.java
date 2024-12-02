@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 
 import java.util.HashMap;
 
-public class Part1 {
+public class Part2 {
   public static void main(String[] args) {
     var file = new File("input.txt");
 
