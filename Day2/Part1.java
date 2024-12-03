@@ -35,12 +35,10 @@ public class Part1 {
       var distance = Math.abs(report.get(i) - report.get(i-1));
       var current = report.get(i);
       var previous = report.get(i-1);
+
       if (distance == 0 || distance > 3) return false;
-      if (isAscending && previous > current) {
-        return false;
-      } else if (!isAscending && previous < current) {
-        return false;
-      }
+      if (isAscending && previous > current) return false;
+      if (!isAscending && previous < current) return false;
     }
     return true;
   }
