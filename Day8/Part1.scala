@@ -35,7 +35,6 @@ object Part1 {
           if (grid.contains(antinode2)) antinodes.add(antinode2)
 
     }
-    println(antinodes)
     println(antinodes.size)
   }
   
