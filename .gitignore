@@ -4,3 +4,4 @@ template/
 .scala-build/
 .vscode
 PowerShell*/
+.scalafmt.conf

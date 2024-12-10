@@ -37,8 +37,7 @@ object Part1 {
     }
     println(antinodes.size)
   }
-  
-  
+
   def readLines(path: String): List[String] = {
     val source = scala.io.Source.fromFile(path)
     try {
@@ -47,25 +46,25 @@ object Part1 {
       source.close()
     }
   }
-}
 
-class Point(val x: Int, val y: Int) {
-  def +(other: Point): Point = Point(this.x + other.x, this.y + other.y)
-  def -(other: Point): Point = Point(this.x - other.x, this.y - other.y)
+  class Point(val x: Int, val y: Int) {
+    def +(other: Point): Point = Point(this.x + other.x, this.y + other.y)
+    def -(other: Point): Point = Point(this.x - other.x, this.y - other.y)
 
-  override def toString(): String = s"[$x,$y]"
-  override def equals(obj: Any): Boolean = {
-    obj match {
-      case that: Point => that.x == x && that.y == y
-      case _ => false
+    override def toString(): String = s"[$x,$y]"
+    override def equals(obj: Any): Boolean = {
+      obj match {
+        case that: Point => that.x == x && that.y == y
+        case _           => false
+      }
     }
+    override def hashCode(): Int = 31 * x + y
   }
-  override def hashCode(): Int = 31 * x + y
-}
 
-class Grid(val width: Int, val height: Int) {
-  val antennas = mutable.Map[Char, ListBuffer[Point]]()
-  def contains(point: Point): Boolean = {
-    0.until(width).contains(point.x) && 0.until(height).contains(point.y)
+  class Grid(val width: Int, val height: Int) {
+    val antennas = mutable.Map[Char, ListBuffer[Point]]()
+    def contains(point: Point): Boolean = {
+      0.until(width).contains(point.x) && 0.until(height).contains(point.y)
+    }
   }
 }
