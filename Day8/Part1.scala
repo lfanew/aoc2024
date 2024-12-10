@@ -21,13 +21,22 @@ object Part1 {
         }
       }
     }
-    println(grid.antennas.keySet.size)
+
     val antinodes = mutable.Set[Point]()
     for key <- grid.antennas.keySet do {
       val points = grid.antennas(key)
-      val pairs = points.flatMap(p => points.map(q => (p, q)))
-      print(pairs)
+      val pairs = ListBuffer[(Point, Point)]()
+      for i <- 0 until points.size do
+        for j <- i + 1 until points.size do
+          val difference = points(i) - points(j)
+          val antinode1 = points(i) + difference
+          val antinode2 = points(j) - difference
+          if (grid.contains(antinode1)) antinodes.add(antinode1)
+          if (grid.contains(antinode2)) antinodes.add(antinode2)
+
     }
+    println(antinodes)
+    println(antinodes.size)
   }
   
   
@@ -44,9 +53,15 @@ object Part1 {
 class Point(val x: Int, val y: Int) {
   def +(other: Point): Point = Point(this.x + other.x, this.y + other.y)
   def -(other: Point): Point = Point(this.x - other.x, this.y - other.y)
-  def difference(other: Point): Point = Point(Math.abs(this.x - other.x), Math.abs(this.y - other.y))
 
-  override def toString(): String = s"($x,$y)"
+  override def toString(): String = s"[$x,$y]"
+  override def equals(obj: Any): Boolean = {
+    obj match {
+      case that: Point => that.x == x && that.y == y
+      case _ => false
+    }
+  }
+  override def hashCode(): Int = 31 * x + y
 }
 
 class Grid(val width: Int, val height: Int) {
