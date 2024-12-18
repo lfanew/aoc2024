@@ -7,7 +7,7 @@ object Part1 {
   def solution(inputPath: String): Unit = {
     val lines = readLines(inputPath).filter(_.nonEmpty)
     val machines = buildMachines(lines)
-    val answer = machines.map(m => combinations(m)).filter(_ != Int.MaxValue).sum()
+    val answer = machines.map(m => minimumCost(m)).filter(_ != Int.MaxValue).sum()
     println(answer)
   }
 
@@ -26,16 +26,14 @@ object Part1 {
   }
 
   @tailrec
-  def combinations(machine: Machine, aPresses: Int = 0, bPresses: Int = 0, min: Int = Int.MaxValue): Int =
+  def minimumCost(machine: Machine, aPresses: Int = 0, bPresses: Int = 0, min: Int = Int.MaxValue): Int =
     if (bPresses > 100) min
-    else if (aPresses > 100) combinations(machine, 0, bPresses + 1, min)
+    else if (aPresses > 100) minimumCost(machine, 0, bPresses + 1, min)
     else {
       val point = (machine.a * aPresses) + (machine.b * bPresses)
       val cost = (3 * aPresses) + bPresses
-      combinations(machine, aPresses + 1, bPresses, if (point == machine.prize) Math.min(cost, min) else min)
+      minimumCost(machine, aPresses + 1, bPresses, if (point == machine.prize) Math.min(cost, min) else min)
     }
-
-    // we can short circuit
 
   case class Point(x: Int, y: Int) {
     def *(that: Int): Point = Point(this.x * that, this.y * that)
